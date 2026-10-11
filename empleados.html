@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados - BarberPro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.8/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/3.0.4/css/dataTables.bootstrap5.min.css">
+    <style>
+        body { background-color: #f8f9fa; color: #333; }
+        .navbar-custom { background-color: black; }
+        .navbar-nav .btn { color: #f8f9fa; text-align: left; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-4" href="index.html">BarberPro</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <ul class="navbar-nav gap-2 mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link px-3 rounded-pill text-white" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="btn" href="servicios.html">Servicios</a></li>
+                        <li class="nav-item"><a class="btn" href="empleados.html">Barberos</a></li>
+
+                        <li class="nav-item dropdown">
+                            <a class="btn dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Administrador</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="administrador.html">Dashboard</a></li>
+                                <li><a class="dropdown-item active" href="empleados.html">Empleados</a></li>
+                                <li><a class="dropdown-item" href="#">Ventas</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="btn dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Gestión</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Citas</a></li>
+                                <li><a class="dropdown-item" href="catalogo.html">Catálogo Servicios</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Inventario</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <a class="btn btn-outline-primary btn-sm text-nowrap" data-bs-toggle="modal" data-bs-target="#modalLogin" href="#">Iniciar sesión</a>
+                        <a class="btn btn-outline-success btn-sm text-nowrap" data-bs-toggle="modal" data-bs-target="#modalRegistro" href="#">Registrarse</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MODAL LOGIN -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h4 class="modal-title">Iniciar sesión</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3 mt-3"><label class="form-label">Email:</label><input type="email" class="form-control" placeholder="Email"></div>
+                        <div class="mb-3"><label class="form-label">Contraseña:</label><input type="password" class="form-control" placeholder="Contraseña"></div>
+                        <button type="submit" class="btn btn-primary w-100 text-white">Ingresar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL REGISTRO -->
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h4 class="modal-title">Registrarse</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3"><label class="form-label">Nombre:</label><input type="text" class="form-control" placeholder="Nombre"></div>
+                        <div class="mb-3"><label class="form-label">Email:</label><input type="email" class="form-control" placeholder="Email"></div>
+                        <div class="mb-3"><label class="form-label">Contraseña:</label><input type="password" class="form-control" placeholder="Contraseña"></div>
+                        <button type="submit" class="btn btn-success w-100 text-white">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container my-5">
+        <h2 class="mb-4">Módulo de Empleados</h2>
+        <div class="table-responsive">
+            <table id="Tablita" class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col" class="text-center">Acciones CRUD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>María Gómez</td>
+                        <td>maria@example.com</td>
+                        <td><span class="badge bg-success">Admin</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#detalles">Ver detalle</button>
+                            <button class="btn btn-sm btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#editar">Editar</button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Carlos Ruiz</td>
+                        <td>carlos@example.com</td>
+                        <td><span class="badge bg-warning text-dark">Editor</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#detalles">Ver detalle</button>
+                            <button class="btn btn-sm btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#editar">Editar</button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Lucia Fernández</td>
+                        <td>lucia@example.com</td>
+                        <td><span class="badge bg-secondary">Usuario</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#detalles">Ver detalle</button>
+                            <button class="btn btn-sm btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#editar">Editar</button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL VER DETALLES (DISABLED) -->
+    <div class="modal fade" id="detalles" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h4 class="modal-title">Info Empleado</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3"><label class="form-label">Nombre:</label><input type="text" class="form-control" value="María Gómez" disabled></div>
+                        <div class="mb-3"><label class="form-label">Dirección:</label><input type="text" class="form-control" value="Calle Falsa 123" disabled></div>
+                        <div class="mb-3"><label class="form-label">Teléfono:</label><input type="tel" class="form-control" value="3001234567" disabled></div>
+                        <div class="mb-3"><label class="form-label">Área:</label><input type="text" class="form-control" value="Administración" disabled></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR -->
+    <div class="modal fade" id="editar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h4 class="modal-title">Editar Empleado</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3"><label class="form-label">Nombre:</label><input type="text" class="form-control" value="María Gómez"></div>
+                        <div class="mb-3"><label class="form-label">Dirección:</label><input type="text" class="form-control" value="Calle Falsa 123"></div>
+                        <div class="mb-3"><label class="form-label">Teléfono:</label><input type="tel" class="form-control" value="3001234567"></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-primary">Guardar</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ELIMINAR -->
+    <div class="modal fade" id="eliminar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white"><h5 class="modal-title">Confirmar Eliminación</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body text-center"><p class="fs-5">¿Desea eliminar este registro?</p></div>
+                <div class="modal-footer justify-content-center"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button><button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sí, eliminar</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/3.0.4/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/3.0.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>new DataTable('#Tablita');</script>
+</body>
+</html>

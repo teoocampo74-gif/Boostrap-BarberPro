@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo Empleados - BarberPro Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b132b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .sidebar { min-height: 100vh; background-color: #050b18; border-right: 1px solid #1c2541; position: fixed; top: 0; left: 0; width: 260px; z-index: 100; }
+        .sidebar .nav-link { color: #8d99ae; transition: 0.2s; margin-bottom: 6px; border-radius: 8px; }
+        .sidebar .nav-link.active, .sidebar .nav-link:hover { color: #ffffff; background-color: #3a86ff; font-weight: 600; }
+        main { margin-left: 260px; }
+        @media (max-width: 768px) { main { margin-left: 0; } .sidebar { position: relative; width: 100%; min-height: auto; } }
+        .card-stat { background-color: #1c2541; border: 1px solid #3a86ff; border-radius: 12px; }
+        .table { color: #fff; }
+        .dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_length select { background-color: #0b132b; color: #fff; border: 1px solid #3a86ff; }
+        .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate { color: #8d99ae !important; }
+        .modal-content { background-color: #1c2541; color: #fff; border: 1px solid #3a86ff; border-radius: 15px; }
+        .form-control { background-color: #0b132b; border: 1px solid #2b3a67; color: #fff; }
+        .form-control::placeholder { color: #6c757d; opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="sidebar p-4">
+                <a href="index.html" class="navbar-brand fw-bold fs-4 text-white mb-4 d-block"><i class="fa-solid fa-scissors me-2 text-info"></i>BarberPro Admin</a>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item"><a class="nav-link" href="admin_dashboard.html"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_citas.html"><i class="fa-solid fa-calendar-check me-2"></i> Módulo Citas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_clientes.html"><i class="fa-solid fa-address-book me-2"></i> Módulo Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin_empleados.html"><i class="fa-solid fa-user-tie me-2"></i> Módulo Empleados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_servicios.html"><i class="fa-solid fa-gem me-2"></i> Módulo Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_seguridad.html"><i class="fa-solid fa-shield-halved me-2"></i> Módulo Seguridad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_auditoria.html"><i class="fa-solid fa-clock-rotate-left me-2"></i> Módulo Auditoría</a></li>
+                    <li class="nav-item"><hr class="dropdown-divider bg-secondary my-3"></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i> Volver al Sitio</a></li>
+                </ul>
+            </nav>
+
+            <main class="col p-5">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                    <h2 class="fw-bold text-info">Gestión de Empleados</h2>
+                    <button class="btn btn-primary fw-semibold px-4 rounded-pill" data-bs-toggle="modal" data-bs-target="#modalNuevoEmp">+ Registrar Empleado</button>
+                </div>
+
+                <div class="card card-stat p-4">
+                    <div class="table-responsive">
+                        <table id="Tablita" class="table table-dark table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Acciones CRUD</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>María Gómez</td>
+                                    <td>maria@barberpro.com</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Ver</button>
+                                        <button class="btn btn-sm btn-warning">Editar</button>
+                                        <button class="btn btn-sm btn-secondary">Deshabilitar</button>
+                                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Carlos Ruiz</td>
+                                    <td>carlos@barberpro.com</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Ver</button>
+                                        <button class="btn btn-sm btn-warning">Editar</button>
+                                        <button class="btn btn-sm btn-secondary">Deshabilitar</button>
+                                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>Lucia Fernández</td>
+                                    <td>lucia@barberpro.com</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Ver</button>
+                                        <button class="btn btn-sm btn-warning">Editar</button>
+                                        <button class="btn btn-sm btn-secondary">Deshabilitar</button>
+                                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL DETALLES -->
+    <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0"><h4 class="modal-title text-info">Detalles del Empleado</h4><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Nombre</label><input type="text" class="form-control" value="María Gómez" disabled></div>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Teléfono</label><input type="text" class="form-control" value="3001234567" disabled></div>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Dirección</label><input type="text" class="form-control" value="Calle 50 # 45-12" disabled></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#Tablita').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" }
+            });
+        });
+    </script>
+</body>
+</html>

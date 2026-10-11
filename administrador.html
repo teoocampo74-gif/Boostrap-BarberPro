@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador - BarberPro</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b132b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .sidebar { min-height: 100vh; background-color: #050b18; border-right: 1px solid #1c2541; position: fixed; top: 0; left: 0; width: 260px; z-index: 100; }
+        .sidebar .nav-link { color: #8d99ae; transition: 0.2s; margin-bottom: 6px; border-radius: 8px; cursor: pointer; }
+        .sidebar .nav-link.active, .sidebar .nav-link:hover { color: #ffffff; background-color: #3a86ff; font-weight: 600; }
+        main { margin-left: 260px; }
+        @media (max-width: 768px) { main { margin-left: 0; } .sidebar { position: relative; width: 100%; min-height: auto; } }
+        .card-stat { background-color: #1c2541; border: 1px solid #3a86ff; border-radius: 12px; }
+        .table { color: #fff; }
+        .dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_length select { background-color: #0b132b; color: #fff; border: 1px solid #3a86ff; }
+        .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate { color: #8d99ae !important; }
+        .modal-content { background-color: #1c2541; color: #fff; border: 1px solid #3a86ff; border-radius: 15px; }
+        .form-control, .form-select { background-color: #0b132b; border: 1px solid #2b3a67; color: #fff; }
+        .form-control::placeholder { color: #6c757d; opacity: 1; }
+        .form-control:focus, .form-select:focus { background-color: #0b132b; color: #fff; border-color: #3a86ff; box-shadow: none; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- SIDEBAR FIJO A LA IZQUIERDA -->
+            <nav class="sidebar p-4">
+                <a href="index.html" class="navbar-brand fw-bold fs-4 text-white mb-4 d-block"><i class="fa-solid fa-scissors me-2 text-info"></i>BarberPro Admin</a>
+                <ul class="nav nav-pills flex-column mb-auto" id="adminTabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#tab-dashboard"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tab-citas"><i class="fa-solid fa-calendar-check me-2"></i> Módulo Citas</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tab-clientes"><i class="fa-solid fa-address-book me-2"></i> Módulo Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tab-empleados"><i class="fa-solid fa-user-tie me-2"></i> Módulo Empleados</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tab-servicios"><i class="fa-solid fa-gem me-2"></i> Módulo Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tab-seguridad"><i class="fa-solid fa-shield-halved me-2"></i> Módulo Seguridad</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tab-auditoria"><i class="fa-solid fa-clock-rotate-left me-2"></i> Módulo Auditoría</a></li>
+                    <li class="nav-item"><hr class="dropdown-divider bg-secondary my-3"></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i> Volver al Sitio</a></li>
+                </ul>
+            </nav>
+
+            <!-- CONTENIDO DINÁMICO DERECHO -->
+            <main class="col p-5">
+                <div class="tab-content">
+
+                    <!-- 1. DASHBOARD -->
+                    <div class="tab-pane fade show active" id="tab-dashboard">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Dashboard General</h2>
+                            <span class="badge bg-primary p-2">Sistema Operativo en Línea</span>
+                        </div>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-3">
+                                <div class="card card-stat p-3 text-white">
+                                    <h6 style="color: #8d99ae;">Citas Pendientes</h6>
+                                    <h3 class="fw-bold text-info mt-2">12</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-stat p-3 text-white">
+                                    <h6 style="color: #8d99ae;">Ventas del Día</h6>
+                                    <h3 class="fw-bold text-success mt-2">$280.000</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-stat p-3 text-white">
+                                    <h6 style="color: #8d99ae;">Clientes Activos</h6>
+                                    <h3 class="fw-bold text-warning mt-2">120</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-stat p-3 text-white">
+                                    <h6 style="color: #8d99ae;">Empleados</h6>
+                                    <h3 class="fw-bold text-primary mt-2">3</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <h4>Panel de Control Administrativo BarberPro</h4>
+                            <p style="color: #8d99ae;" class="mt-2">Haz clic en Módulo Empleados para probar los botones CRUD y el DataTable con buscador.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. MÓDULO DE CITAS -->
+                    <div class="tab-pane fade" id="tab-citas">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Gestión de Citas</h2>
+                            <button class="btn btn-primary fw-semibold px-4 rounded-pill">+ Registrar Cita</button>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cliente</th>
+                                            <th>Barbero</th>
+                                            <th>Servicio</th>
+                                            <th>Fecha / Hora</th>
+                                            <th>Estado</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Andrés Castro</td>
+                                            <td>María Gómez</td>
+                                            <td>Corte Clásico</td>
+                                            <td>15/10/2026 - 10:00 AM</td>
+                                            <td><span class="badge bg-warning text-dark">Pendiente</span></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-success">Completar</button>
+                                                <button class="btn btn-sm btn-danger">Cancelar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. MÓDULO DE CLIENTES -->
+                    <div class="tab-pane fade" id="tab-clientes">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Gestión de Clientes</h2>
+                            <button class="btn btn-primary fw-semibold px-4 rounded-pill">+ Registrar Cliente</button>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Teléfono</th>
+                                            <th>Historial</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Carlos Pérez</td>
+                                            <td>3104567890</td>
+                                            <td>3 Visitas registradas</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-warning">Editar</button>
+                                                <button class="btn btn-sm btn-secondary">Bloquear</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. MÓDULO DE EMPLEADOS (CON CRUD Y DATATABLE FUNCIONAL) -->
+                    <div class="tab-pane fade" id="tab-empleados">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Gestión de Empleados</h2>
+                            <button class="btn btn-primary fw-semibold px-4 rounded-pill" data-bs-toggle="modal" data-bs-target="#modalCrearEmp">+ Registrar Empleado</button>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <div class="table-responsive">
+                                <table id="Tablita" class="table table-dark table-hover align-middle mb-0 w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Estado</th>
+                                            <th class="text-center">Acciones CRUD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>María Gómez</td>
+                                            <td>maria@barberpro.com</td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Ver</button>
+                                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button>
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>2</th>
+                                            <td>Carlos Ruiz</td>
+                                            <td>carlos@barberpro.com</td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Ver</button>
+                                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button>
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>3</th>
+                                            <td>Lucia Fernández</td>
+                                            <td>lucia@barberpro.com</td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Ver</button>
+                                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button>
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. MÓDULO DE SERVICIOS -->
+                    <div class="tab-pane fade" id="tab-servicios">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Gestión de Servicios</h2>
+                            <button class="btn btn-primary fw-semibold px-4 rounded-pill">+ Nuevo Servicio</button>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Servicio</th>
+                                            <th>Precio</th>
+                                            <th>Estado</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Corte Clásico</td>
+                                            <td>$25.000</td>
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-warning">Editar</button>
+                                                <button class="btn btn-sm btn-danger">Desactivar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. MÓDULO DE SEGURIDAD -->
+                    <div class="tab-pane fade" id="tab-seguridad">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Módulo de Seguridad</h2>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <h4>Control de Accesos y Credenciales</h4>
+                            <p style="color: #8d99ae;" class="mt-2">Gestión de roles de usuario, permisos de administrador y control de sesiones activas.</p>
+                        </div>
+                    </div>
+
+                    <!-- 7. MÓDULO DE AUDITORÍA -->
+                    <div class="tab-pane fade" id="tab-auditoria">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                            <h2 class="fw-bold text-info">Módulo de Auditoría</h2>
+                        </div>
+                        <div class="card card-stat p-4">
+                            <h4>Registro de Actividad y Copias de Seguridad (Backups)</h4>
+                            <p style="color: #8d99ae;" class="mt-2">Consulta de logs del sistema y generación de respaldos de la base de datos.</p>
+                            <button class="btn btn-outline-info mt-3 w-25">Generar Backup Manual</button>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODALES CRUD PARA EMPLEADOS (OPERATIVOS)  -->
+    <!-- ========================================== -->
+
+    <!-- 1. MODAL CREAR / REGISTRAR EMPLEADO -->
+    <div class="modal fade" id="modalCrearEmp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title text-info"><i class="fa-solid fa-user-plus me-2"></i>Registrar Nuevo Empleado</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Nombre Completo</label>
+                            <input type="text" class="form-control" placeholder="Ej. Ana María">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Correo Electrónico</label>
+                            <input type="email" class="form-control" placeholder="correo@barberpro.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Teléfono</label>
+                            <input type="tel" class="form-control" placeholder="3000000000">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-2">Guardar Empleado</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MODAL VER DETALLES -->
+    <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title text-info"><i class="fa-solid fa-circle-info me-2"></i>Detalles del Empleado</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Nombre</label><input type="text" class="form-control" value="María Gómez" disabled></div>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Teléfono</label><input type="text" class="form-control" value="3001234567" disabled></div>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Dirección</label><input type="text" class="form-control" value="Calle 50 # 45-12" disabled></div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MODAL EDITAR EMPLEADO -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title text-warning"><i class="fa-solid fa-pen-to-square me-2"></i>Editar Empleado</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Nombre</label><input type="text" class="form-control" value="María Gómez"></div>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Email</label><input type="email" class="form-control" value="maria@barberpro.com"></div>
+                        <div class="mb-3"><label class="form-label small" style="color: #8d99ae;">Teléfono</label><input type="tel" class="form-control" value="3001234567"></div>
+                        <button type="submit" class="btn btn-warning w-100 py-2 rounded-pill mt-2 text-dark fw-bold">Actualizar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MODAL ELIMINAR EMPLEADO -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 text-center">
+                <div class="modal-header border-0 justify-content-center">
+                    <h4 class="modal-title text-danger fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i>Confirmar Eliminación</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="fs-5" style="color: #8d99ae;">¿Estás seguro de que deseas eliminar este registro de empleado?</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center gap-2">
+                    <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger px-4 rounded-pill" data-bs-dismiss="modal">Sí, eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de jQuery, Bootstrap y DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Inicializar DataTable correctamente
+            const tabla = $('#Tablita').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" }
+            });
+
+            // Ajustar el tamaño del DataTable al cambiar a la pestaña de empleados
+            $('a[href="#tab-empleados"]').on('shown.bs.tab', function (e) {
+                tabla.columns.adjust().draw();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberPro - Inicio</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b132b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .navbar-custom { background-color: #050b18; border-bottom: 1px solid #1c2541; }
+        .hero-section {
+            background: linear-gradient(rgba(5, 11, 24, 0.85), rgba(5, 11, 24, 0.8)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1400&q=80');
+            background-size: cover; background-position: center; color: white; padding: 7rem 2rem; border-radius: 20px; border: 1px solid #1c2541;
+        }
+        .modal-content { background-color: #1c2541; color: #fff; border: 1px solid #3a86ff; border-radius: 15px; }
+        .form-control { background-color: #0b132b; border: 1px solid #2b3a67; color: #fff; }
+        .form-control::placeholder { color: #6c757d; opacity: 1; }
+        .form-control:focus { background-color: #0b132b; color: #fff; border-color: #3a86ff; box-shadow: none; }
+        .btn-blue { background-color: #3a86ff; color: #fff; font-weight: 600; transition: 0.3s; }
+        .btn-blue:hover { background-color: #2667cc; color: #fff; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top py-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-4 text-info" href="index.html"><i class="fa-solid fa-scissors me-2"></i>BarberPro</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <ul class="navbar-nav gap-2 mb-2 mb-lg-0 align-items-center">
+                        <li class="nav-item"><a class="nav-link active text-info fw-semibold" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="barberos.html">Barberos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                        
+                        <!-- MENÚ DESPLEGABLE DE ADMINISTRACIÓN LIMPIO -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Administración</a>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="background-color: #050b18; border: 1px solid #1c2541;">
+                                <li><a class="dropdown-item" href="administrador.html">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="administrador.html">Citas</a></li>
+                                <li><a class="dropdown-item" href="administrador.html">Clientes</a></li>
+                                <li><a class="dropdown-item" href="administrador.html">Empleados</a></li>
+                                <li><a class="dropdown-item" href="administrador.html">Servicios</a></li>
+                                <li><a class="dropdown-item" href="administrador.html">Seguridad</a></li>
+                                <li><a class="dropdown-item" href="administrador.html">Auditoría</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- BARRA DE BÚSQUEDA Y BOTONES DE SESIÓN -->
+                    <div class="d-flex align-items-center gap-3">
+                        <form class="d-flex" role="search">
+                            <input class="form-control form-control-sm me-2" type="search" placeholder="Buscar...">
+                            <button class="btn btn-outline-info btn-sm" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                        <button class="btn btn-outline-light btn-sm px-3 rounded-pill text-nowrap" data-bs-toggle="modal" data-bs-target="#modalLogin">Iniciar Sesión</button>
+                        <button class="btn btn-blue btn-sm px-3 rounded-pill text-nowrap" data-bs-toggle="modal" data-bs-target="#modalRegistro">Registrarse</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MODAL LOGIN -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title fw-bold text-info"><i class="fa-solid fa-user-lock me-2"></i>Iniciar Sesión</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Correo Electrónico</label>
+                            <input type="email" class="form-control" placeholder="tu_correo@barberpro.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Contraseña</label>
+                            <input type="password" class="form-control" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn btn-blue w-100 py-2 rounded-pill mt-2">Entrar al Sistema</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL REGISTRO -->
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title fw-bold text-info"><i class="fa-solid fa-user-plus me-2"></i>Crear Cuenta</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Nombre Completo</label>
+                            <input type="text" class="form-control" placeholder="Ej. Mateo Ocampo">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Correo Electrónico</label>
+                            <input type="email" class="form-control" placeholder="tu_correo@barberpro.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color: #8d99ae;">Contraseña</label>
+                            <input type="password" class="form-control" placeholder="Mínimo 8 caracteres">
+                        </div>
+                        <button type="submit" class="btn btn-blue w-100 py-2 rounded-pill mt-2">Registrarse Ahora</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container my-5">
+        <div class="hero-section shadow-lg text-center text-lg-start">
+            <div class="col-lg-7">
+                <span class="badge bg-primary px-3 py-2 rounded-pill fw-bold mb-3">EXPERIENCIA PREMIUM</span>
+                <h1 class="fw-bold display-4 mb-3">Estilo y precisión en cada corte</h1>
+                <p class="lead mb-4" style="color: #8d99ae;">Reserva con los mejores barberos profesionales, disfruta de un ambiente exclusivo y luce impecable.</p>
+                <a href="barberos.html" class="btn btn-blue btn-lg rounded-pill px-5 fw-bold shadow">Escoger mi Barbero</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
